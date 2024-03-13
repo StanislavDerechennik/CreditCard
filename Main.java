@@ -42,29 +42,39 @@ public class Main {
             System.out.println("INVALID CARD NUMBER!!!");
     }
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Please input the number of your credit card: ");
-        String number = bufferedReader.readLine();
-        number = number.replaceAll("\\D+","");
+    public static boolean isCorrectNumber(String number) {
         if (number.length() != 13 && number.length() != 15 && number.length() != 16) {
-            System.out.println("INVALID CARD NUMBER!!!");
+            return false;
         }
         else if (number.length() == 13 && number.charAt(0) != '4') {
-            System.out.println("INVALID CARD NUMBER!!!");
+            return false;
         }
         else if (number.length() == 15 && !number.substring(0, 2).equals("34") &&
                 !number.substring(0, 2).equals("37")) {
-            System.out.println("INVALID CARD NUMBER!!!");
+            return false;
         }
         else if (number.length() == 16 && number.charAt(0) != '4' &&
                 !number.substring(0, 2).equals("51") && !number.substring(0, 2).equals("52") &&
                 !number.substring(0, 2).equals("53") && !number.substring(0, 2).equals("54") &&
                 !number.substring(0, 2).equals("55")) {
-            System.out.println("INVALID CARD NUMBER!!!");
+            return false;
         }
         else {
+            return true;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Please input the number of your credit card: ");
+        String number = bufferedReader.readLine();
+        number = number.replaceAll("\\D+","");
+
+        if (isCorrectNumber(number) == true) { // == true по умолчанию, поэтому его можно убрать
             luhns(Long.parseLong(number));
+        }
+        else {
+            System.out.println("INVALID CARD NUMBER!!!");
         }
     }
 }
